@@ -1,0 +1,98 @@
+{
+	"info": {
+		"_postman_id": "b6c5754e-2e24-4b22-847e-969667c1131d",
+		"name": "Park Api",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "13831614"
+	},
+	"item": [
+		{
+			"name": "Park Car",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"plaque\":\"34-{{$randomCountryCode}}-{{$randomInt}}\",\r\n    \"color\":\"{{$randomColor}}\"\r\n    //,\"carType\":\"CAR\"\r\n    ,\"carType\":\"JEEP\"\r\n    //,\"carType\":\"TRUCK\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/park",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"park"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Leave Car",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/park/34-GI-333",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"park",
+						"34-GI-333"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Parked Cars",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/park",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"park"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "http://localhost:8080/v1",
+			"type": "string"
+		}
+	]
+}
