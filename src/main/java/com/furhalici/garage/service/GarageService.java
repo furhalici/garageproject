@@ -1,5 +1,6 @@
 package com.furhalici.garage.service;
 
+import com.furhalici.garage.exception.CarNotFoundException;
 import com.furhalici.garage.exception.ParkSlotNotFoundException;
 import com.furhalici.garage.model.Car;
 import lombok.extern.slf4j.Slf4j;
@@ -40,7 +41,8 @@ public class GarageService {
             var car = slots.stream()
                     .filter(c -> plaque.equals(c.getPlaque()))
                     .findFirst()
-                    .orElseThrow();
+                    .orElseThrow(CarNotFoundException::new);
+
             slots.remove(car);
             currentCapacity.addAndGet(car.getCapacity());
             log.info("Leave Car (type={}, plaque={})", car.getCarType().name(), car.getPlaque());
@@ -49,11 +51,21 @@ public class GarageService {
         }
     }
 
-    public List<Car> parkedCars(){
+    public List<Car> parkedCars() {
         return (LinkedList<Car>) slots.clone();
     }
 
-    public boolean availableParking(int capacity) {
-        return capacity < currentCapacity.get();
+    public int getCurrentCapacity() {
+        return currentCapacity.get();
+    }
+
+    public void reset() {
+        try {
+            reentrantLock.lock();
+            slots.clear();
+            currentCapacity.set(CAPACITY);
+        } finally {
+            reentrantLock.unlock();
+        }
     }
 }
